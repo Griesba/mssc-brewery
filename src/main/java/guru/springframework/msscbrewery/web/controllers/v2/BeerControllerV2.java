@@ -8,10 +8,13 @@ import guru.springframework.msscbrewery.web.services.v2.BeerServiceV2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+@Validated
 @RequestMapping(BeerControllerV2.BASE_URL)
 public class BeerControllerV2 {
     public static final String BASE_URL = "/api/v2/beers";
@@ -23,7 +26,7 @@ public class BeerControllerV2 {
     }
 
     @GetMapping("/{beerId}")
-    public ResponseEntity<BeerDtoV2> beerDtoList(@PathVariable("beerId") UUID beerId){
+    public ResponseEntity<BeerDtoV2> beerDtoList(@NotNull @PathVariable("beerId") UUID beerId){
         return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
     }
 
