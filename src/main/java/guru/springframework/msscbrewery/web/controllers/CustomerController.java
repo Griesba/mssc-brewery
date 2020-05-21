@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -26,7 +27,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity handleCreate(@RequestBody CustomerDto customerDto){
+    public ResponseEntity handleCreate(@Valid @RequestBody CustomerDto customerDto){
         CustomerDto customerDtoCreated =  customerService.create(customerDto);
         Headers headers = new Headers();
         headers.add("Location", BASE_URL + "/" + customerDtoCreated.getId().toString());
@@ -34,7 +35,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}")
-    public ResponseEntity handleUpdate(@PathVariable UUID customerId, @RequestBody CustomerDto customerDto){
+    public ResponseEntity handleUpdate(@PathVariable UUID customerId, @Valid @RequestBody CustomerDto customerDto){
         customerService.update(customerId, customerDto);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
